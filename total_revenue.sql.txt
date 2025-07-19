@@ -1,0 +1,14 @@
+SELECT
+    p.payment_method,
+    COUNT(DISTINCT o.order_id) AS number_of_transactions,
+    ROUND(SUM(oi.quantity * oi.price_per_unit), 2) AS total_revenue
+FROM
+    Payments p
+JOIN
+    Orders o ON p.order_id = o.order_id
+JOIN
+    Order_Items oi ON o.order_id = oi.order_id
+GROUP BY
+    p.payment_method
+ORDER BY
+    number_of_transactions DESC;

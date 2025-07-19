@@ -1,0 +1,16 @@
+SELECT
+    c.first_name,
+    c.last_name,
+    c.email,
+    ROUND(SUM(oi.quantity * oi.price_per_unit), 2) AS total_spent
+FROM
+    Customers c
+JOIN
+    Orders o ON c.customer_id = o.customer_id
+JOIN
+    Order_Items oi ON o.order_id = oi.order_id
+GROUP BY
+    c.customer_id, c.first_name, c.last_name, c.email
+ORDER BY
+    total_spent DESC
+LIMIT 10;
